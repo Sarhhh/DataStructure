@@ -5,12 +5,15 @@ using namespace std;
 
 int BF(string T, string P)
 {
+    cout << "Locate the Pattern string with the BF method." << endl;
+    int count = 0;
     int i = 0;
     while (i <= T.length() - P.length())
     {
         int j = 0;
         while (j < P.length())
         {
+            count++;
             if (T[i] == P[j])
             {
                 i++;
@@ -24,6 +27,7 @@ int BF(string T, string P)
         }
         if (j == P.length())
         {
+            cout << "Compare time is " << count << "." << endl;
             return (i - j);
         }
     }
@@ -59,6 +63,8 @@ vector<int> getnext(string n)
 
 int KMP(string T, string P)
 {
+    cout << "Locate the Pattern string with the KMP method." << endl;
+    int count = 0;
     int i = 0;
     int j = 0;
     vector<int> next = getnext(P);
@@ -72,6 +78,7 @@ int KMP(string T, string P)
 
     while (i < T.length())
     {
+        count++;
         if (j == -1 || T[i] == P[j])
         {
             i++;
@@ -84,6 +91,7 @@ int KMP(string T, string P)
 
         if (j == P.length())
         {
+            cout << "Compare time is " << count << "." << endl;
             return i - j;
         }
     }
@@ -92,25 +100,29 @@ int KMP(string T, string P)
 
 int KMP2(string T, string P)
 {
+    cout << "Locate the Pattern string with the KMP method by constructing a new string." << endl;
+    int count = 0;
     string s = P + '#' + T;
-    cout << "构造的字符串s为：" << s << endl;
+    // cout << "构造的字符串s为：" << s << endl;
     vector<int> n(s.length());
     n[0] = 0;
-    for (int i = 1; i < s.length();i++)
+    for (int i = 1; i < s.length(); i++)
     {
-        cout << "计算n[" << i << "]，当前字符s[" << i << "]=" << s[i] << endl;
+        // cout << "计算n[" << i << "]，当前字符s[" << i << "]=" << s[i] << endl;
         int j = n[i - 1];
-        cout << "当前j=" << j << endl;
-        while (j>=0)
+        // cout << "当前j=" << j << endl;
+        while (j >= 0)
         {
-            cout << "比较s[" << j << "]=" << s[j] << "和s[" << i << "]=" << s[i] << endl;
-            if(s[j]==s[i])
+            // cout << "比较s[" << j << "]=" << s[j] << "和s[" << i << "]=" << s[i] << endl;
+            count++;
+            if (s[j] == s[i])
             {
                 n[i] = j + 1;
-                cout << "匹配成功，n[" << i << "]=" << n[i] << endl;
-                if(n[i]==P.length())
+                // cout << "匹配成功，n[" << i << "]=" << n[i] << endl;
+                if (n[i] == P.length())
                 {
-                    cout << "模式串匹配成功，返回位置：" << i - P.length() - 1 << endl;
+                    // cout << "模式串匹配成功，返回位置：" << i - P.length() - 1 << endl;
+                    cout << "Compare time is " << count << "." << endl;
                     return i - P.length() - 1;
                 }
                 break;
@@ -118,31 +130,47 @@ int KMP2(string T, string P)
             else
             {
                 j--;
-                cout << "匹配失败，j减1，当前j=" << j << endl;
+                // cout << "匹配失败，j减1，当前j=" << j << endl;
             }
         }
-        if(j<0)
+        if (j < 0)
         {
-            cout << "匹配失败，j<0，n[" << i << "]=" << 0 << endl;
+            // cout << "匹配失败，j<0，n[" << i << "]=" << 0 << endl;
             n[i] = 0;
         }
     }
-    cout << "主串中未找到模式串，返回-1" << endl;
+    cout << "The Pattern string cannot be found in Main string." << endl;
     return -1;
+}
+
+void print_result(int pos)
+{
+    if (pos != -1)
+    {
+        cout << "The Pattern string can be found at the " << pos << "'s position in Main string." << endl;
+    }
+    else
+    {
+        cout << "The Pattern string cannot be found in Main string." << endl;
+    }
 }
 
 int main()
 {
     string text = "ssssssssussu";
     string pattern = "ussu";
-    int pos = KMP2(text, pattern);
-    if (pos != -1)
-    {
-        cout << "匹配成功，模式串首次出现位置为：" << pos << endl;
-    }
-    else
-    {
-        cout << "匹配失败，主串中未找到模式串。" << endl;
-    }
+
+    int pos = BF(text, pattern);
+    print_result(pos);
+    cout << "*****************************************************************" << endl;
+
+    pos = KMP(text, pattern);
+    print_result(pos);
+    cout << "*****************************************************************" << endl;
+
+    pos = KMP2(text, pattern);
+    print_result(pos);
+    cout << "*****************************************************************" << endl;
+
     return 0;
 }

@@ -75,6 +75,16 @@ vector<int> sort2(vector<int> Nums) // 使用一个队列进行循环插入排序
     return a;
 }
 
+vector<int> sort3(vector<int> Nums) // 同学提供的用栈和队列进行排序的算法
+{
+    vector<int> stack;
+    vector<int> queue(Nums);
+    while (!queue.empty())
+    {
+        /* code */
+    }
+}
+
 int main()
 {
 
