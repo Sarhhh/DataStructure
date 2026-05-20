@@ -1,12 +1,9 @@
-#include<iostream>
+#include <iostream>
 
 using namespace std;
 
-typedef struct Node
+typedef struct TreeNode
 {
     double val;
-    Node* next;
+    TreeNode *next;
 };
-
-
-

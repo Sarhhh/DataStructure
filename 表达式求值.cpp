@@ -4,27 +4,24 @@
 
 using namespace std;
 
-class Node
+class TreeNode
 {
 public:
-    virtual ~Node() {};
+    virtual ~TreeNode() {};
 };
 
-class NumNode : public Node
+class NumNode : public TreeNode
 {
 public:
     double val;
     NumNode(string s) : val(stod(s)) {};
 };
 
-class OpNode : public Node
+class OpNode : public TreeNode
 {
 public:
     char op;
 };
-
-
-
 
 int main()
 {
@@ -33,7 +30,6 @@ int main()
     getline(cin, str);
     return 0;
 }
-
 
 // vector<Node *> toPostfixExpression(string str)
 // {
